@@ -108,18 +108,19 @@ namespace Nethermind.Config
                         {
                             string category = @interface.IsAssignableFrom(typeof(INoCategoryConfig)) ? null : config.GetType().Name;
                             string name = propertyInfo.Name;
-                            foreach (CustomAttributeData ad in propertyInfo.CustomAttributes)
-                            {
-                                if (ad.AttributeType == typeof(System.ObsoleteAttribute))
-                                {
-                                    _logger.Warn("Attribute " + name + " is going to be deprecated. Please use SyncMode=" + name + " instead.");
-                                }
-                            }
+
                             (bool isSet, object value) = _configSource[i].GetValue(propertyInfo.PropertyType, category, name);
                             if (isSet)
                             {
                                 try
                                 {
+                                    foreach (CustomAttributeData ad in propertyInfo.CustomAttributes)
+                                    {
+                                        if (ad.AttributeType == typeof(System.ObsoleteAttribute))
+                                        {
+                                            _logger.Warn("Attribute " + name + " is going to be deprecated. Please use SyncMode=" + name + " in your config instead.");
+                                        }
+                                    }
                                     propertyInfo.SetValue(config, value);
                                 }
                                 catch (Exception e)
