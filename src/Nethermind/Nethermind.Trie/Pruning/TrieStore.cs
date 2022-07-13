@@ -435,7 +435,7 @@ namespace Nethermind.Trie.Pruning
                         }
                         else
                         {
-                            if (_logger.IsInfo) _logger.Info($"SKipping candidate set {frontSet.BlockNumber} because its lower than current set {candidateSetSet[0].BlockNumber}");
+                            if (_logger.IsInfo) _logger.Info($"Skipping candidate set {frontSet.BlockNumber} because its lower than current set {candidateSetSet[0].BlockNumber}");
                         }
                     }
                     else
@@ -449,6 +449,7 @@ namespace Nethermind.Trie.Pruning
                     if (_logger.IsInfo) _logger.Info($"Elevated pruning for candidate {candidateSetSet[0].BlockNumber}, num of set {candidateSetSet.Count}");
                     foreach (BlockCommitSet blockCommitSet in candidateSetSet)
                     {
+                        if (_logger.IsInfo) _logger.Debug($"Persisting candidate set {blockCommitSet.BlockNumber}, Root: {blockCommitSet.Root}");
                         Persist(blockCommitSet);
                     }
                     return true;
