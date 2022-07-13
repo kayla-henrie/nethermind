@@ -425,11 +425,13 @@ namespace Nethermind.Trie.Pruning
                         if (candidateSetSet.Count > 0 && candidateSetSet[0].BlockNumber == frontSet.BlockNumber)
                         {
                             candidateSetSet.Add(frontSet);
+                            if (_logger.IsDebug) _logger.Debug($"Reading to candidate set with number {candidateSetSet[0].BlockNumber}, set count is now {candidateSetSet.Count}");
                         }
                         else
                         {
                             candidateSetSet = new List<BlockCommitSet>();
                             candidateSetSet.Add(frontSet);
+                            if (_logger.IsDebug) _logger.Debug($"New candidate set {candidateSetSet[0].BlockNumber}");
                         }
                     }
                     else
